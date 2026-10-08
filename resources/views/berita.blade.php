@@ -1,13 +1,14 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="text-center">
-    <h1>{{ $singlenews["judul"] }}</h1>
-    <h5>{{ $singlenews["penulis"] }}</h5>
-</div>
-<div class="text-justify">
-    <p>{{ $singlenews["konten"] }}</p>
-</div>
+<h1 class="text-center mb-4">Berita</h1>
 
-<a href="/berita">Kembali</a>
+@foreach ($beritas as $berita)
+<article class="mb-4">
+    <h3><a href="/berita/{{ $berita['slug'] }}">{{ $berita['judul'] }}</a></h3>
+    <h6>Oleh {{ $berita['penulis'] }}</h6>
+    <p>{{ str($berita['konten'])->limit(150) }}</p>
+    <a href="/berita/{{ $berita['slug'] }}">Baca selengkapnya</a>
+</article>
+@endforeach
 @endsection
