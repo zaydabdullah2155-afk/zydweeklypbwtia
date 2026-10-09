@@ -1,50 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-Use App\Models\Berita;
+namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 
-use function PHPUnit\Framework\returnArgument;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-
-
-Route::get('/', function () {
-    return view('home', [
-        "title" => "Home",
-    ]);
-});
-
-Route::get('/profile', function () {
-    return view('profile', [
-        "title" => "Profile",
-        "name" => "Muhammad Zaid Abdullah",
-        "nim" => "13242520030",
-        "prodi" => "Teknologi Informasi",
-        "gambar" => "H2r.jpg",
-    ]);
-});
-Route::get('/berita', function () {
-
-
-    return view('berita', [
-        "title" => "Berita",
-        "beritas" => Berita::ambildata(),
-    ]);
-});
-
-Route::get('/berita/{slug}', function ($slug) {
-    $data_berita = [
+class Berita extends Model
+{
+    private static $data_berita = [
         [
             "judul" => "MBG Mas Burhan Gunawan",
             "slug" => "mbg-mas-burhan-gunawan",
@@ -56,26 +18,22 @@ Route::get('/berita/{slug}', function ($slug) {
             "slug" => "indonesia-juara-asean",
             "penulis" => "Amin",
             "konten" => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae laboriosam, reiciendis autem reprehenderit maxime facere repudiandae ipsa quas architecto molestiae minima qui aliquam unde odit! Aspernatur magni voluptate harum eveniet doloribus ipsam. Deserunt officiis autem voluptas alias odio nemo? Optio, praesentium voluptates a natus voluptatibus magnam esse dolorem necessitatibus. Eum praesentium suscipit officia, animi dolor et. Ex in quia nam reiciendis quam ut inventore id? Magni dolores aperiam nihil qui,",
-        ]
-
+        ],
     ];
 
-    $singlenews = [];
-
-    foreach ($data_berita as $berita) {
-        if ($berita["slug"] == $slug) {
-            $singlenews = $berita;
-        }
+    public static function ambildata()
+    {
+        return self::$data_berita;
     }
 
-    return view('beritatunggal', [
-        "title" => "judul berita tunggal",
-        "singlenews" => $singlenews,
-    ]);
-});
+    public static function cari($slug)
+    {
+        foreach (self::$data_berita as $berita) {
+            if ($berita["slug"] === $slug) {
+                return $berita;
+            }
+        }
 
-Route::get('/contact', function () {
-    return view('contact', [
-        "title" => "contact",
-    ]);
-});
+        return null;
+    }
+}
