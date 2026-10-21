@@ -26,14 +26,24 @@ class Berita extends Model
         return self::$data_berita;
     }
 
-    public static function cari($slug)
+    public static function getBerita($slug)
     {
-        foreach (self::$data_berita as $berita) {
+        $beritas = self::$data_berita; /// ambil semua data berita
+
+        $singlenews = [];
+        foreach ($beritas as $berita) {
             if ($berita["slug"] === $slug) {
-                return $berita;
+                $singlenews = $berita;
+                break;
             }
         }
 
-        return null;
+        return $singlenews;
+    }
+
+    public static function getJudul($slug)
+    {
+        $berita = self::getBerita($slug);
+        return $berita["judul"] ;
     }
 }
