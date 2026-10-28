@@ -15,12 +15,11 @@ class BeritaController extends Controller
         ]);
     }
 
-    public static function tampilberitatunggal($slug)
-
+    public function tampilberitatunggal($slug)
     {
         $berita = \App\Models\Berita::getBerita($slug);
         return view('beritatunggal', [
-            "title" => \App\Models\Berita::getJudul($slug),
+            "title" => $berita->judul,
             "singlenews" => $berita,
         ]);
     }
